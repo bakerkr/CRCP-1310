@@ -8,7 +8,7 @@ void setup() {
 }
 
 
-
+void draw() {
 kinect.enableIR(true);
 
 
@@ -22,4 +22,6 @@ if (rawDepth < threshold) {
     sumX += x;
     sumY += y;
     count++;
-  }
+    
+}
+}
