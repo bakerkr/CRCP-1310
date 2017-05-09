@@ -1,6 +1,8 @@
+//Kyle Baker
 class Flurry {
   // talk to ball
-  ArrayList<Ball> balls;
+ ArrayList<Ball> balls;
+ PVector ptracker;
 
   Flurry() {
     balls = new ArrayList<Ball>();
@@ -14,7 +16,7 @@ class Flurry {
 
   void update(KinectTracker tracker) {
     if (tracker.inRange) {
-      int numToAdd = round(random(6, 45));
+      int numToAdd = round(random(6, 150));
       // initialize new balls
       for (int i = 0; i<numToAdd; i++) {
         balls.add(new Ball());

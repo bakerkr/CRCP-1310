@@ -6,6 +6,8 @@
 // https://github.com/shiffman/OpenKinect-for-Processing
 // http://shiffman.net/p5/kinect/
 
+//Kyle Baker (lots of edits)
+
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
@@ -13,6 +15,7 @@ import org.openkinect.processing.*;
 Kinect kinect;
 KinectTracker tracker;
 Flurry storm;
+PVector ptracker;
 
 void setup() {
   kinect = new Kinect(this);
@@ -26,23 +29,11 @@ void draw() {
 
   // Run the tracking analysis
   tracker.track();
-  // Show the image
+  // Shows the depth image allowing for sensor to be lined up
  //tracker.display();
   storm.update(tracker);
   storm.draw();
-    
-
-  // Let's draw the raw location
- /*PVector v1 = tracker.getPos();
-  fill(50, 100, 250, 200);
-  noStroke();
-  ellipse(v1.x+width/4, v1.y+height/3, 20, 20);*/
-  
-  // Let's draw the "lerped" location
- /*PVector v2 = tracker.getLerpedPos();
-  fill(100, 250, 50, 200);
-  noStroke();
-  ellipse(v2.x+width/4, v2.y+height/3, 20, 20);*/
+  ptracker = tracker.previousLocation.sub(tracker.getPos());
 }
 
 // Adjust the threshold with key presses
