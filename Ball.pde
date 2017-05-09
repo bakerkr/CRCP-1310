@@ -1,17 +1,16 @@
-/*
-Ball class
-Donya Quick
-Lecture example covered on April 19, 2017
-*/
+//Ball class
+//Donya Quick
+//Lecture example covered on April 19, 2017
+
+//Kyle Baker (lots of edits)
 
 class Ball {
   float x;
   float y;
   color c;
-  //int transparency=random(155,255);
   float radius;
-  float xSpeed = random(-5,5); //speed of hand + random()
-  float ySpeed = random(-5,5); //speed of hand + random()
+  float xSpeed = random(-5,5);
+  float ySpeed = random(-5,5);
   int alpha = (int)random(155,255);
   
   Ball() {
@@ -19,17 +18,12 @@ class Ball {
     this.c = color(255,alpha);
     noStroke();
     PVector v1 = tracker.getPos();
-    x = v1.x+width/4;
-    y = v1.y+height/3;
+    x = map(v1.x,0,kinect.width, 0, width);
+    y = map(v1.y,0,kinect.height, 0, height);
   }
   
   void display() {
-    fill(c);
-    if (x>random(7*width/8,width)) {
-      alpha = alpha-1;
-     } else if (alpha<0) {
-      alpha = 0;
-  }
+    fill(c, alpha);
     ellipse(x,y, radius*2, radius*2);
   }
   

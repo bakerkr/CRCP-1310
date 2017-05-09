@@ -5,6 +5,8 @@
 // https://github.com/shiffman/OpenKinect-for-Processing
 // http://shiffman.net/p5/kinect/
 
+//Kyle Baker (edits)
+
 class KinectTracker {
 
   // Depth threshold
@@ -16,22 +18,30 @@ class KinectTracker {
   // Interpolated location
   PVector lerpedLoc;
 
+  //for snow direction
+  PVector previousLocation;
+
   // Depth data
   int[] depth;
   
+  boolean inRange;
+  
   // What we'll show the user
   PImage display;
-   
+  
+  
   KinectTracker() {
+    inRange = false;
     // This is an awkard use of a global variable here
     // But doing it this way for simplicity
     kinect.initDepth();
-    kinect.enableMirror(true);
+    kinect.enableMirror(false);
     // Make a blank image
     display = createImage(kinect.width, kinect.height, RGB);
     // Set up the vectors
     loc = new PVector(0, 0);
     lerpedLoc = new PVector(0, 0);
+    previousLocation = new PVector(0, 0);
   }
 
   void track() {
@@ -39,6 +49,10 @@ class KinectTracker {
     depth = kinect.getRawDepth();
 
     // Being overly cautious here
+    
+    previousLocation.x = loc.x;
+    previousLocation.y = loc.y;
+    
     if (depth == null) return;
 
     float sumX = 0;
@@ -63,6 +77,11 @@ class KinectTracker {
     // As long as we found something
     if (count != 0) {
       loc = new PVector(sumX/count, sumY/count);
+    }
+    if (count>1000) {
+      inRange=true;
+    } else {
+      inRange=false;
     }
 
     // Interpolating the location, doing it arbitrarily for now
@@ -105,7 +124,7 @@ class KinectTracker {
     display.updatePixels();
 
     // Draw the image
-    image(display, width/4, 7*height/16);
+    image(display, width/2.5, 10*height/16);
   }
 
   int getThreshold() {
